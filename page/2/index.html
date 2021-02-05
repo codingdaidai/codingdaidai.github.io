@@ -146,6 +146,341 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/01/15/day%2002%20Java%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lingyun Zhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="codingdaidai">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/15/day%2002%20Java%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-15 23:35:35 / Modified: 23:34:30" itemprop="dateCreated datePublished" datetime="2021-01-15T23:35:35+08:00">2021-01-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Java基本语法-变量-常量"><a href="#Java基本语法-变量-常量" class="headerlink" title="Java基本语法 变量 常量"></a>Java基本语法 变量 常量</h1><hr>
+<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><hr>
+<p>被赋予特定含义的单词</p>
+<p>常见举例：</p>
+<ul>
+<li>定义数据类型：class，interface，enum，@interface，byte，short，int，long，char，float等</li>
+<li>定义数据类型值：true，false，null</li>
+<li>定义流程控制：if，switch，for，continue，while等</li>
+<li>定于访问权限修饰符：public，private，protected</li>
+<li>定义类，函数，变量修饰符：abstract，final，static，synchronized</li>
+<li>定义类与类关系：extends，implements</li>
+<li>定义建立实例，引用实例，判断实例：new，this，super，instanceof</li>
+<li>用于处理异常：try，finally，catch，throw，throws</li>
+<li>用于包：package，import</li>
+<li>其他: native，strictfp，transient，volatile，assert</li>
+</ul>
+<p>偷了一张表:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问控制</td>
+<td>private</td>
+<td>protected</td>
+<td>public</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>类，方法和变量修饰符</td>
+<td>abstract</td>
+<td>class</td>
+<td>extends</td>
+<td>final</td>
+<td>implements</td>
+<td>interface</td>
+<td>native</td>
+</tr>
+<tr>
+<td></td>
+<td>new</td>
+<td>static</td>
+<td>strictfp</td>
+<td>synchronized</td>
+<td>transient</td>
+<td>volatile</td>
+<td></td>
+</tr>
+<tr>
+<td>程序控制</td>
+<td>break</td>
+<td>continue</td>
+<td>return</td>
+<td>do</td>
+<td>while</td>
+<td>if</td>
+<td>else</td>
+</tr>
+<tr>
+<td></td>
+<td>for</td>
+<td>instanceof</td>
+<td>switch</td>
+<td>case</td>
+<td>default</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>错误处理</td>
+<td>try</td>
+<td>catch</td>
+<td>throw</td>
+<td>throws</td>
+<td>finally</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>包相关</td>
+<td>import</td>
+<td>package</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>基本类型</td>
+<td>boolean</td>
+<td>byte</td>
+<td>char</td>
+<td>double</td>
+<td>float</td>
+<td>int</td>
+<td>long</td>
+</tr>
+<tr>
+<td></td>
+<td>short</td>
+<td>null</td>
+<td>true</td>
+<td>false</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>变量引用</td>
+<td>super</td>
+<td>this</td>
+<td>void</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>保留字</td>
+<td>goto</td>
+<td>const</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><hr>
+<p>程序执行中固定不变的量</p>
+<p>分类：</p>
+<ul>
+<li>字面值常量（6类）<ul>
+<li>字符串     ”HelloWorld“ （双引号）</li>
+<li>整数    28，-80</li>
+<li>小数    12.34</li>
+<li>字符   ‘a’  ‘9’  （单个字符，用单引号）</li>
+<li>布尔   true，false</li>
+<li>空   null </li>
+</ul>
+</li>
+<li>自定义常量</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstantDemo</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    两个快捷方式：main方法快捷键：psvm  直接enter</span></span><br><span class="line"><span class="comment">               输出语句快捷键:sout</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;wasd&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">        System.out.println(-<span class="number">20</span>);</span><br><span class="line">        System.out.println(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="变量的定义和使用"><a href="#变量的定义和使用" class="headerlink" title="变量的定义和使用"></a>变量的定义和使用</h2><hr>
+<p>定义格式：数据类型 变量名 = 初始化值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VariableDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">28</span>;</span><br><span class="line">        System.out.println(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><hr>
+<p>Java数据类型：</p>
+<ul>
+<li>基本类型：（8种基本类型）<ul>
+<li>整数型（默认为int）<ul>
+<li>字节型 byte</li>
+<li>短整型 short</li>
+<li>整型 int</li>
+<li>长整型 long</li>
+</ul>
+</li>
+<li>浮点型 （默认为double）<ul>
+<li>单精度浮点型 float</li>
+<li>双精度浮点型 double</li>
+</ul>
+</li>
+<li>字符型 char</li>
+<li>布尔型 boolean</li>
+</ul>
+</li>
+<li>引用类型：<ul>
+<li>类 class</li>
+<li>接口 interface</li>
+<li>数组 【】</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>基本类型</th>
+<th>位数</th>
+<th>字节</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>32</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>short</td>
+<td>16</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>long</td>
+<td>64</td>
+<td>8</td>
+<td>0L</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>8</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>char</td>
+<td>16</td>
+<td>2</td>
+<td>‘u0000’</td>
+</tr>
+<tr>
+<td>float</td>
+<td>32</td>
+<td>4</td>
+<td>0f</td>
+</tr>
+<tr>
+<td>double</td>
+<td>64</td>
+<td>8</td>
+<td>0d</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>1</td>
+<td></td>
+<td>false</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VariableDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">28</span>;</span><br><span class="line">        System.out.println(num);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">33</span>;</span><br><span class="line">        System.out.println(a);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">short</span> s = <span class="number">2</span>;</span><br><span class="line">        System.out.println(s);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> l = <span class="number">3000000000000L</span>;<span class="comment">//过大整数，超出int范围，数后加L</span></span><br><span class="line">        System.out.println(l);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span> b = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        System.out.println(b);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        System.out.println(c);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">float</span> f = <span class="number">10.2F</span>;</span><br><span class="line">        System.out.println(f);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">double</span> d = <span class="number">1.22</span>;</span><br><span class="line">        System.out.println(d);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> p = <span class="keyword">true</span>;</span><br><span class="line">        System.out.println(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h2><hr>
+<p>分类：</p>
+<ul>
+<li>自动类型转换： 小类型自动提升为大类型运算</li>
+<li>强制类型转换： 手动转换</li>
+</ul>
+<p>![image-20210115222704884](D:\Files\Daily Task\image-20210115222704884.png)</p>
+<p>箭头指向：从小到大</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConvertionDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">        System.out.println(a+b);</span><br><span class="line">        <span class="keyword">int</span> c = a+b;</span><br><span class="line">        System.out.println(c);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> aa = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">byte</span> bb = <span class="number">20</span>;</span><br><span class="line">        System.out.println(aa+bb);</span><br><span class="line">        <span class="keyword">int</span> cc = aa+bb;</span><br><span class="line">        System.out.println(cc); <span class="comment">// int和byte运算，byte会转换为int再运算。结果为int，只能用int类型接收结果</span></span><br><span class="line">        <span class="comment">//byte dd = aa+bb;</span></span><br><span class="line">        <span class="comment">//System.out.println(dd);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//强制用byte接收结果</span></span><br><span class="line">        <span class="keyword">byte</span> dd =(<span class="keyword">byte</span>)(aa+bb); <span class="comment">//把运算结果强制转换为byte型</span></span><br><span class="line">        System.out.println(dd);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">double</span> d1 = <span class="number">3.14</span>;</span><br><span class="line">        <span class="keyword">int</span> a1 = (<span class="keyword">int</span>)d1;</span><br><span class="line">        System.out.println(a1); <span class="comment">//浮点转换为整数，精度损失 输出结果为3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">30</span></span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h2><hr>
+<p>给类，方法，变量，常量起名字的字符序列</p>
+<p> 规则：</p>
+<ol>
+<li>不以数字开头</li>
+<li>不能是关键字</li>
+<li>区分大小写</li>
+</ol>
+<p>命名规范：</p>
+<ol>
+<li>类和接口：首字母大写，每个单词首字母大写，如HelloWorld</li>
+<li>变量和方法: 首字母小写，后面开始的单词首字母大写，如getNum</li>
+<li>常量名：所有字母大写，多个单词下划线隔开，如：MAX_VALUE</li>
+<li>包名;全小写，多级用.隔开，域名反写，如cn.itcast.demo</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/01/15/hexo+gitpages%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -404,7 +739,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
