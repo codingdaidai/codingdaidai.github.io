@@ -146,6 +146,178 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/01/16/day%2003%20%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E9%80%89%E6%8B%A9%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lingyun Zhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="codingdaidai">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/16/day%2003%20%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E9%80%89%E6%8B%A9%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-16 23:51:57 / Modified: 18:55:34" itemprop="dateCreated datePublished" datetime="2021-01-16T23:51:57+08:00">2021-01-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="java基础-运算符-流程控制-选择结构"><a href="#java基础-运算符-流程控制-选择结构" class="headerlink" title="java基础 运算符  流程控制-选择结构"></a>java基础 运算符  流程控制-选择结构</h1><hr>
+<h2 id="算数运算符概述"><a href="#算数运算符概述" class="headerlink" title="算数运算符概述"></a>算数运算符概述</h2><hr>
+<p>加 + 减 - 乘 * 除 / 取模(余) % 自增 ++ 自减–</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorDemo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">3</span>;</span><br><span class="line">        System.out.println(a/b);</span><br><span class="line">        System.out.println(a%b);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;---&quot;</span>);</span><br><span class="line">        System.out.println(<span class="number">5.0</span>/<span class="number">3</span>); <span class="comment">// 结果要有浮点，必须有浮点数参与</span></span><br><span class="line">        System.out.println(<span class="number">5</span>/<span class="number">4.000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">---</span><br><span class="line">1.6666666666666667</span><br><span class="line">1.25</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="字符和字符串参与加法运算"><a href="#字符和字符串参与加法运算" class="headerlink" title="字符和字符串参与加法运算"></a>字符和字符串参与加法运算</h2><hr>
+<p>加法+运算特点：</p>
+<ul>
+<li><p>加号两边是数值型，加法</p>
+<p>‘a’,‘0’ 等字符型参与时，用该字符对应的数值运算（ASCII值）</p>
+</li>
+<li><p>加号两边任一边是字符串，进行拼接</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//字符加法</span></span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">char</span> b =<span class="string">&#x27;a&#x27;</span>; <span class="comment">//97</span></span><br><span class="line">        <span class="keyword">char</span> c=<span class="string">&#x27;A&#x27;</span>;  <span class="comment">//65</span></span><br><span class="line">        System.out.println(a+b);</span><br><span class="line">        System.out.println(b+c);</span><br><span class="line">        System.out.println(<span class="string">&quot;------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//字符串拼接</span></span><br><span class="line">        System.out.println(<span class="string">&quot;hello&quot;</span>+<span class="string">&quot;world&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;hello&quot;</span>+<span class="number">10</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;hello&quot;</span>+<span class="number">10</span>+<span class="number">20</span>);</span><br><span class="line">        System.out.println(<span class="number">10</span>+<span class="number">20</span>+<span class="string">&quot;hello&quot;</span>); <span class="comment">//注意结果</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">107</span><br><span class="line">162</span><br><span class="line">------</span><br><span class="line">helloworld</span><br><span class="line">hello10</span><br><span class="line">hello1020</span><br><span class="line">30hello</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="自增和自减"><a href="#自增和自减" class="headerlink" title="自增和自减"></a>自增和自减</h2><hr>
+<ul>
+<li>单独使用：放在变量前后都一样</li>
+<li>参与运算：<ul>
+<li>变量前：先自增，在运算；</li>
+<li>变量后：先以原值进行其他运算，再自增</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorDemo3</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">3</span>;</span><br><span class="line">        a++;</span><br><span class="line">        System.out.println(<span class="string">&quot;a:&quot;</span>+a);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> c = b++;</span><br><span class="line">        System.out.println(<span class="string">&quot;b:&quot;</span>+b);</span><br><span class="line">        System.out.println(<span class="string">&quot;c:&quot;</span>+c); <span class="comment">//++在后，先把b值赋予c，b再自增</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> d = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">int</span> e=--d;</span><br><span class="line">        System.out.println(<span class="string">&quot;d:&quot;</span>+d);</span><br><span class="line">        System.out.println(<span class="string">&quot;e:&quot;</span>+e); <span class="comment">//--在前，d先自减，再赋予e</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a:4</span><br><span class="line">b:4</span><br><span class="line">c:3</span><br><span class="line">d:2</span><br><span class="line">e:2</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><hr>
+<ul>
+<li>基本：=</li>
+<li>扩展：+=    -=    /=    *=    %=   (隐含着强制类型转换)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorDemo4</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">short</span> s = <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// s=s+1; // 报错，s+1的结果是int整型，不能赋予short型的s</span></span><br><span class="line"></span><br><span class="line">        s+=<span class="number">1</span>; <span class="comment">//把s+1的结果赋予s，并强制转换为s的类型short，等同于：s=(short)(s+1)</span></span><br><span class="line">        System.out.println(s);</span><br><span class="line"></span><br><span class="line">        s=(<span class="keyword">short</span>)(s+<span class="number">1</span>);</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h2><hr>
+<p>举例：==   !=   &gt;   &gt;=    &lt;   &lt;=</p>
+<p>结果：都是布尔型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorDemo5</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(a==b);  <span class="comment">//判断</span></span><br><span class="line">        System.out.println(a=b);  <span class="comment">//赋值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">false</span><br><span class="line">20</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><hr>
+<p>举例：&amp;&amp;与    ||或      ! 非</p>
+<p>结果：布尔型</p>
+<hr>
+<h2 id="三元运算符"><a href="#三元运算符" class="headerlink" title="三元运算符"></a>三元运算符</h2><hr>
+<p>格式：（关系表达式）?表达式1: 表达式2</p>
+<p>含义：关系表达式结果为true，运算结果为表达式1；反之，为表达式2</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorDemo6</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//输出两数最大值</span></span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">        System.out.println((a&gt;=b)?a:b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="选择结构（if和switch语句）"><a href="#选择结构（if和switch语句）" class="headerlink" title="选择结构（if和switch语句）"></a>选择结构（if和switch语句）</h2><hr>
+<h3 id="scanner基本使用"><a href="#scanner基本使用" class="headerlink" title="scanner基本使用"></a>scanner基本使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"><span class="comment">//1,导包</span></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScannerDemo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//2,创建键盘录入对象</span></span><br><span class="line">        Scanner sc=<span class="keyword">new</span> Scanner(System.in);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;输入一个整数：&quot;</span>);</span><br><span class="line">        <span class="comment">//3.接收数据</span></span><br><span class="line">        <span class="keyword">int</span> i = sc.nextInt();</span><br><span class="line">        <span class="comment">//4，把输入打印到控制台</span></span><br><span class="line">        System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入一个整数：</span><br><span class="line">299</span><br><span class="line">299</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><ul>
+<li>顺序结构</li>
+<li>选择结构</li>
+<li>循环结构 </li>
+</ul>
+<hr>
+<h3 id="If语句"><a href="#If语句" class="headerlink" title="If语句"></a>If语句</h3><hr>
+<p>3种格式：</p>
+<ol>
+<li><p>if(关系表达式){</p>
+<p>//语句</p>
+<p>}</p>
+</li>
+<li><p>if (关系表达式){</p>
+<p>//语句体1</p>
+<p>}else{</p>
+<p>//语句体2</p>
+<p>}</p>
+</li>
+<li><p>if(关系表达式1){</p>
+<p>//语句体1</p>
+<p>}else if(关系表达式2){</p>
+<p>//语句体2</p>
+<p>}else if(关系表达式3){</p>
+<p>//语句体3</p>
+<p>}……</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IfDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//输入两个数并打印最大的</span></span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);  <span class="comment">// 输入Scanner后可手动导包，或ALT+ENTER导包</span></span><br><span class="line">        System.out.println(<span class="string">&quot;输入第一个数&quot;</span>);</span><br><span class="line">        <span class="keyword">int</span> a = sc.nextInt();</span><br><span class="line">        System.out.println(<span class="string">&quot;输入第二个数&quot;</span>);</span><br><span class="line">        <span class="keyword">int</span> b = sc.nextInt();</span><br><span class="line">        <span class="keyword">int</span> max;</span><br><span class="line">        <span class="keyword">if</span>(a&gt;=b)&#123;</span><br><span class="line">            max = a;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            max = b;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(max);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入第一个数</span><br><span class="line">0</span><br><span class="line">输入第二个数</span><br><span class="line">-1</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IfDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//对学生不同成绩分成不同等级</span></span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        System.out.println(<span class="string">&quot;your grades:  &quot;</span>);</span><br><span class="line">        <span class="keyword">int</span> a =sc.nextInt();  							<span class="comment">//测试数据：正确的，错误的，边界的</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (a&gt;=<span class="number">0</span>&amp;&amp;a&lt;<span class="number">60</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;you failed&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (a&gt;=<span class="number">60</span>&amp;&amp;a&lt;<span class="number">90</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;just so so&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (a&gt;=<span class="number">90</span>&amp;&amp;a&lt;=<span class="number">100</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;excellent!&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;wrong&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">your grades:  </span><br><span class="line">110</span><br><span class="line">wrong</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h3><hr>
+<p>语句格式;</p>
+<p>switch(表达式){                    表达式可取：byte，short，int，char，string，枚举</p>
+<p>​    case值1：                         case后：与表达式比较的值</p>
+<p>​        语句体1；</p>
+<p>​        break；</p>
+<p>​    case值2：</p>
+<p>​        语句体2；</p>
+<p>​        break；</p>
+<p>​    ……</p>
+<p>​    default：                        default：都不匹配的情况</p>
+<p>​        语句体；</p>
+<p>​        break；</p>
+<p>}</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwitchDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//输入1-7输出对应星期</span></span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        System.out.println(<span class="string">&quot;输入1-7：&quot;</span>);</span><br><span class="line">        <span class="keyword">int</span> a = sc.nextInt();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span>(a)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Monday&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Tuesday&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Thursday&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Wednesday&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Friday&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Saturday&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Sunday&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;Wrong&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;					                       <span class="comment">//CTRL+ALT+L可格式化代码</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入1-7：</span><br><span class="line">7</span><br><span class="line">Sunday</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/01/15/day%2002%20Java%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -739,7 +911,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
