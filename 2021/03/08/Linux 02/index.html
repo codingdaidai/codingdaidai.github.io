@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"codingdaidai.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="dos命令 - cd 进入指定目录，盘符后加(cd&#x2F;d 直接写全路径) - cd.. 返回上一级 - cd&#x2F; 返回根目录 - dir 列出文件 - md 创建文件 - del 删除文件 - rd 删除目录（只有空目录可删除） HelloWorld在cmd执行-javac 编译，java文件编译为class文件，文件名为类名 -java 运行class类名 IDEA下实现12345678packag">
+  <meta name="description" content="实用指令指令运行级别 0：关机 1：单用户（找回丢失密码） 2：多用户无网络服务 3：多用户有网络服务 4：保留 5：图形界面 6：重启  常用的运行级别是3，5，要修改默认的运行级别可修改配置文件 系统的运行级别配置文件：&#x2F;etc&#x2F;inittab (注意：centos7不支持），可修改开机运行的默认级别。centos7可以直接用set-default :将默认运行级别设置为指定的target；">
 <meta property="og:type" content="article">
 <meta property="og:title" content="codingdaidai">
-<meta property="og:url" content="https://codingdaidai.github.io/2021/01/15/day01%20java%E5%89%8D%E8%A8%80/index.html">
+<meta property="og:url" content="https://codingdaidai.github.io/2021/03/08/Linux%2002/index.html">
 <meta property="og:site_name" content="codingdaidai">
-<meta property="og:description" content="dos命令 - cd 进入指定目录，盘符后加(cd&#x2F;d 直接写全路径) - cd.. 返回上一级 - cd&#x2F; 返回根目录 - dir 列出文件 - md 创建文件 - del 删除文件 - rd 删除目录（只有空目录可删除） HelloWorld在cmd执行-javac 编译，java文件编译为class文件，文件名为类名 -java 运行class类名 IDEA下实现12345678packag">
+<meta property="og:description" content="实用指令指令运行级别 0：关机 1：单用户（找回丢失密码） 2：多用户无网络服务 3：多用户有网络服务 4：保留 5：图形界面 6：重启  常用的运行级别是3，5，要修改默认的运行级别可修改配置文件 系统的运行级别配置文件：&#x2F;etc&#x2F;inittab (注意：centos7不支持），可修改开机运行的默认级别。centos7可以直接用set-default :将默认运行级别设置为指定的target；">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-01-15T02:26:31.070Z">
-<meta property="article:modified_time" content="2021-01-14T02:53:03.590Z">
+<meta property="article:published_time" content="2021-03-08T14:07:06.912Z">
+<meta property="article:modified_time" content="2021-03-08T14:05:35.321Z">
 <meta property="article:author" content="Lingyun Zhou">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://codingdaidai.github.io/2021/01/15/day01%20java%E5%89%8D%E8%A8%80/">
+<link rel="canonical" href="https://codingdaidai.github.io/2021/03/08/Linux%2002/">
 
 
 <script id="page-configurations">
@@ -151,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/01/15/day01%20java%E5%89%8D%E8%A8%80/">
+    <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/03/08/Linux%2002/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -173,16 +173,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-01-15 10:26:31" itemprop="dateCreated datePublished" datetime="2021-01-15T10:26:31+08:00">2021-01-15</time>
+              <time title="Created: 2021-03-08 22:07:06 / Modified: 22:05:35" itemprop="dateCreated datePublished" datetime="2021-03-08T22:07:06+08:00">2021-03-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-14 10:53:03" itemprop="dateModified" datetime="2021-01-14T10:53:03+08:00">2021-01-14</time>
-              </span>
 
           
 
@@ -195,23 +189,97 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="dos命令"><a href="#dos命令" class="headerlink" title="dos命令"></a>dos命令</h1><hr>
-<pre><code>- cd 进入指定目录，盘符后加(cd/d 直接写全路径)
-- cd.. 返回上一级
-- cd/ 返回根目录
-- dir 列出文件
-- md 创建文件
-- del 删除文件
-- rd 删除目录（只有空目录可删除）</code></pre>
-<h1 id="HelloWorld"><a href="#HelloWorld" class="headerlink" title="HelloWorld"></a>HelloWorld</h1><h3 id="在cmd执行"><a href="#在cmd执行" class="headerlink" title="在cmd执行"></a>在cmd执行</h3><pre><code>-javac 编译，java文件编译为class文件，文件名为类名
--java 运行class类名</code></pre>
-<h3 id="IDEA下实现"><a href="#IDEA下实现" class="headerlink" title="IDEA下实现"></a>IDEA下实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<pre><code>IDEA使用终端也可编译再执行，目录均在src下</code></pre>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">总结：1 一个源文件可以声明多个class，但只有一个public class，且与源文件名称相同；</span><br><span class="line"></span><br><span class="line">     2  main方法是程序入口，是固定的 public static void main(String[] args)；</span><br></pre></td></tr></table></figure>
+        <h1 id="实用指令"><a href="#实用指令" class="headerlink" title="实用指令"></a>实用指令</h1><h2 id="指令运行级别"><a href="#指令运行级别" class="headerlink" title="指令运行级别"></a>指令运行级别</h2><ul>
+<li>0：关机</li>
+<li>1：单用户（找回丢失密码）</li>
+<li>2：多用户无网络服务</li>
+<li>3：多用户有网络服务</li>
+<li>4：保留</li>
+<li>5：图形界面</li>
+<li>6：重启</li>
+</ul>
+<p>常用的运行级别是3，5，要修改默认的运行级别可修改配置文件</p>
+<p>系统的运行级别配置文件：/etc/inittab (注意：centos7不支持），可修改开机运行的默认级别。centos7可以直接用set-default :将默认运行级别设置为指定的target；</p>
+<p>centos7不再使用/etc/inittab文件进行默认的启动级别配置，而使用比sysvinit的运行级更为自由的target替代。第3运行级用multi-user.target替代，第5运行级用graphical.target替代。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/renshengdezheli/p/13935307.html">centos7运行级别</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lhdz_bj/p/10084310.html">centos7运行级别设置</a></p>
+<ul>
+<li><p>运行级别对应关系</p>
+<pre><code>init level       systemctl target
+0            shutdown.target
+1            emergency.target
+2            rescure.target
+3            multi-user.target
+4            无
+5            graphical.target
+6            reboot.target</code></pre>
+</li>
+<li><p>运行级别设置</p>
+<ul>
+<li><p>语法：systemctl [command] [unit.target]</p>
+</li>
+<li><p>命令及参数</p>
+<ul>
+<li><p>command部分</p>
+<p>get-default :获取当前的target；</p>
+<p>set-default :将默认运行级别设置为指定的target；</p>
+<p>isolate :切换至指定的运行级别。</p>
+</li>
+<li><p>unit.target部分：为上面1节部分中给出的运行级别</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常用运行级别相关命令</p>
+<ul>
+<li>systemctl<ul>
+<li>systemctl get-default：获取当前的运行级别；</li>
+<li>systemctl set-default multi-user.target：将默认运行级别设置为mulit-user；</li>
+<li>systemctl isolate multi-user.target：不重启系统的情况下，将运行级别切换至mulit-user；</li>
+<li>systemctl isolate graphical.target：不重启系统的情况下，将运行级别切换至图形模式</li>
+</ul>
+</li>
+<li>其他：<ul>
+<li>runlvel：返回结果中，第一个数为之前运行级别，后一个数为当前运行级别；</li>
+<li>init 5：将当前运行级别切换至5（图形模式）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="切换到指令运行级别的指令"><a href="#切换到指令运行级别的指令" class="headerlink" title="切换到指令运行级别的指令"></a>切换到指令运行级别的指令</h2><p>init[0123456]</p>
+<p><strong>找回root密码：</strong></p>
+<p>思路：进入到单用户模式，然后修改root密码，因为单用户模式root不需要密码就可以登录</p>
+<p>方法：启动时按enter，在kernel下按e，在该行最后 输入1再enter，再输入b开始引导，此时以root身份登入单用户模式，然后再用passwd修改密码</p>
+<h2 id="帮助指令"><a href="#帮助指令" class="headerlink" title="帮助指令"></a>帮助指令</h2><p>了解指令的使用方法</p>
+<ul>
+<li><p>基本语法：man 命令或配置文件 （用法）</p>
+<p>  ​                    help 命令  （功能描述）</p>
+</li>
+</ul>
+<h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><ol>
+<li>pwd： 显示当前工作目录的绝对路径</li>
+<li>ls：ls 选项 目录或文件<ul>
+<li>ls -a 显示当前目录的所有文件和目录，包括隐藏的（隐藏文件以 . 开头）</li>
+<li>ls -l 以列表的方式显示信息</li>
+</ul>
+</li>
+<li>cd：切换目录<ul>
+<li>语法：cd 参数 </li>
+<li>cd 绝对路径或相对路径</li>
+<li>cd ：或者cd~ :切换到自己的家目录</li>
+<li>cd.. ：回到当前目录的上一级目录</li>
+</ul>
+</li>
+<li>mkdir：创建目录<ul>
+<li>mkdir -p ：创建多级目录</li>
+</ul>
+</li>
+<li>rmdir：删除空目录</li>
+<li>rm -rf：删除非空目录</li>
+</ol>
 
-
-<h1 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 									单行注释</span><br><span class="line"></span><br><span class="line">&#x2F;* 111								多行注释</span><br><span class="line">   222</span><br><span class="line">   333*&#x2F;</span><br><span class="line">  </span><br><span class="line">&#x2F;**</span><br><span class="line">	@author</span><br><span class="line">	@version</span><br><span class="line">*&#x2F;    								文档注释（注释可被解析成说明文档 cmd javadoc -d）用来注释整个类或者方法</span><br></pre></td></tr></table></figure>
-<h1 id="API文档"><a href="#API文档" class="headerlink" title="API文档"></a>API文档</h1>
     </div>
 
     
@@ -225,11 +293,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2021/01/15/hexo+gitpages%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
+    <a href="/2021/03/07/Linux%2001/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -288,7 +356,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dos%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">dos命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HelloWorld"><span class="nav-number">2.</span> <span class="nav-text">HelloWorld</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8cmd%E6%89%A7%E8%A1%8C"><span class="nav-number">2.0.1.</span> <span class="nav-text">在cmd执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IDEA%E4%B8%8B%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.0.2.</span> <span class="nav-text">IDEA下实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%B3%A8%E9%87%8A"><span class="nav-number">3.</span> <span class="nav-text">代码注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API%E6%96%87%E6%A1%A3"><span class="nav-number">4.</span> <span class="nav-text">API文档</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">实用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E8%BF%90%E8%A1%8C%E7%BA%A7%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">指令运行级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E5%88%B0%E6%8C%87%E4%BB%A4%E8%BF%90%E8%A1%8C%E7%BA%A7%E5%88%AB%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">切换到指令运行级别的指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%AE%E5%8A%A9%E6%8C%87%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">帮助指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">1.4.</span> <span class="nav-text">文件目录</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

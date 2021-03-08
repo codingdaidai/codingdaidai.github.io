@@ -146,6 +146,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/03/08/Linux%2002/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lingyun Zhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="codingdaidai">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/08/Linux%2002/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-03-08 22:07:06 / Modified: 22:05:35" itemprop="dateCreated datePublished" datetime="2021-03-08T22:07:06+08:00">2021-03-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="实用指令"><a href="#实用指令" class="headerlink" title="实用指令"></a>实用指令</h1><h2 id="指令运行级别"><a href="#指令运行级别" class="headerlink" title="指令运行级别"></a>指令运行级别</h2><ul>
+<li>0：关机</li>
+<li>1：单用户（找回丢失密码）</li>
+<li>2：多用户无网络服务</li>
+<li>3：多用户有网络服务</li>
+<li>4：保留</li>
+<li>5：图形界面</li>
+<li>6：重启</li>
+</ul>
+<p>常用的运行级别是3，5，要修改默认的运行级别可修改配置文件</p>
+<p>系统的运行级别配置文件：/etc/inittab (注意：centos7不支持），可修改开机运行的默认级别。centos7可以直接用set-default :将默认运行级别设置为指定的target；</p>
+<p>centos7不再使用/etc/inittab文件进行默认的启动级别配置，而使用比sysvinit的运行级更为自由的target替代。第3运行级用multi-user.target替代，第5运行级用graphical.target替代。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/renshengdezheli/p/13935307.html">centos7运行级别</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lhdz_bj/p/10084310.html">centos7运行级别设置</a></p>
+<ul>
+<li><p>运行级别对应关系</p>
+<pre><code>init level       systemctl target
+0            shutdown.target
+1            emergency.target
+2            rescure.target
+3            multi-user.target
+4            无
+5            graphical.target
+6            reboot.target</code></pre>
+</li>
+<li><p>运行级别设置</p>
+<ul>
+<li><p>语法：systemctl [command] [unit.target]</p>
+</li>
+<li><p>命令及参数</p>
+<ul>
+<li><p>command部分</p>
+<p>get-default :获取当前的target；</p>
+<p>set-default :将默认运行级别设置为指定的target；</p>
+<p>isolate :切换至指定的运行级别。</p>
+</li>
+<li><p>unit.target部分：为上面1节部分中给出的运行级别</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常用运行级别相关命令</p>
+<ul>
+<li>systemctl<ul>
+<li>systemctl get-default：获取当前的运行级别；</li>
+<li>systemctl set-default multi-user.target：将默认运行级别设置为mulit-user；</li>
+<li>systemctl isolate multi-user.target：不重启系统的情况下，将运行级别切换至mulit-user；</li>
+<li>systemctl isolate graphical.target：不重启系统的情况下，将运行级别切换至图形模式</li>
+</ul>
+</li>
+<li>其他：<ul>
+<li>runlvel：返回结果中，第一个数为之前运行级别，后一个数为当前运行级别；</li>
+<li>init 5：将当前运行级别切换至5（图形模式）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="切换到指令运行级别的指令"><a href="#切换到指令运行级别的指令" class="headerlink" title="切换到指令运行级别的指令"></a>切换到指令运行级别的指令</h2><p>init[0123456]</p>
+<p><strong>找回root密码：</strong></p>
+<p>思路：进入到单用户模式，然后修改root密码，因为单用户模式root不需要密码就可以登录</p>
+<p>方法：启动时按enter，在kernel下按e，在该行最后 输入1再enter，再输入b开始引导，此时以root身份登入单用户模式，然后再用passwd修改密码</p>
+<h2 id="帮助指令"><a href="#帮助指令" class="headerlink" title="帮助指令"></a>帮助指令</h2><p>了解指令的使用方法</p>
+<ul>
+<li><p>基本语法：man 命令或配置文件 （用法）</p>
+<p>  ​                    help 命令  （功能描述）</p>
+</li>
+</ul>
+<h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><ol>
+<li>pwd： 显示当前工作目录的绝对路径</li>
+<li>ls：ls 选项 目录或文件<ul>
+<li>ls -a 显示当前目录的所有文件和目录，包括隐藏的（隐藏文件以 . 开头）</li>
+<li>ls -l 以列表的方式显示信息</li>
+</ul>
+</li>
+<li>cd：切换目录<ul>
+<li>语法：cd 参数 </li>
+<li>cd 绝对路径或相对路径</li>
+<li>cd ：或者cd~ :切换到自己的家目录</li>
+<li>cd.. ：回到当前目录的上一级目录</li>
+</ul>
+</li>
+<li>mkdir：创建目录<ul>
+<li>mkdir -p ：创建多级目录</li>
+</ul>
+</li>
+<li>rmdir：删除空目录</li>
+<li>rm -rf：删除非空目录</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/03/07/Linux%2001/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1436,85 +1584,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/01/16/Plan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lingyun Zhou">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="codingdaidai">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/16/Plan/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-16 23:51:57 / Modified: 19:26:49" itemprop="dateCreated datePublished" datetime="2021-01-16T23:51:57+08:00">2021-01-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="寒假学习计划"><a href="#寒假学习计划" class="headerlink" title="寒假学习计划"></a>寒假学习计划</h1><hr>
-<p>2021/1/16</p>
-<p>​    为了在两年后成为一名java开发者OR大数据工程师，没有有关经验的本人一定要抓住宝贵的时间来学习转行，2021的研一下学期应该还是以上课为主，那么一定要抓住这段时间！短期的目标是在研一的暑假找到一份相关实习，稍微长远一点是在研二暑假找到一份大厂的实习。</p>
-<p>​    现在的我基本没有什么基础，无非是各种课程设计OR毕设写了少许代码，java更是没学过，但是目前热情还算高涨，时刻提醒自己时间宝贵，研二还需要发一篇小论文以及忙自己的毕设，抓紧！</p>
-<p>​    寒假从今天1-16到2-28开学，给自己计划两条学习的线路：</p>
-<ul>
-<li>JavaSE部分：视频总222集，目前已学习42集，在1-10之前完成此部分，预计每天至少8集。<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wx411f7qN?p=43">Java入门/黑马Java零基础Java在线教程最新Java编程</a>，这个比较简略，除了跟着敲代码写笔记，对照 <a target="_blank" rel="noopener" href="https://snailclimb.gitee.io/javaguide/">JavaGuide</a> 补充，有时间跟着核心技术书过一遍<ul>
-<li>再往后计划是JVM，并发，多线程等</li>
-<li>JavaWeb，常用框架，前端知识</li>
-</ul>
-</li>
-<li>算法和数据库，以及其他<ul>
-<li>算法，每天做一道leetcode，不会也要抄；算法小抄，每天读一点，写笔记</li>
-<li>数据库：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12b411K7Zu?p=1">MySQL_基础+高级篇- 数据库 -sql -mysql教程_mysql视频_mysql入门_尚硅谷</a>，基础部分178集，计划与SE同步，每天至少7.5集</li>
-<li>MySQL结束后是JDBC，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eJ411c7rf?p=1">尚硅谷JDBC核心技术(新版jdbc)</a>，下一步再计划</li>
-<li>同时，还有LINUX部分需要学习</li>
-<li>这些结束后相当于完成了<a target="_blank" rel="noopener" href="https://classroom.devcloud.huaweicloud.com/platform">华为云大数据全栈计划</a>的第一部分，再计划接下来的学习方向</li>
-</ul>
-</li>
-</ul>
-<p>​    每天晚上更新博客~</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1584,7 +1653,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
