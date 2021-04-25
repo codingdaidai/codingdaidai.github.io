@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"codingdaidai.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="微服务通用模块开发通用模块功能设计思想 通用的代码、配置不应该散落在各个业务模块中，不利于维护与更新 一个大的系统，响应对象需要统一外层格式 各种业务设计与实现，可能会抛出各种各样的异常，异常信息的收集也应该做到统一  ad-common模块 通用代码定义，配置定义：在多个模块中都有的  统一的响应处理：   ![](D:\Files\Daily Task\images\1617202285(1)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="codingdaidai">
+<meta property="og:url" content="https://codingdaidai.github.io/2021/04/25/%E9%A1%B9%E7%9B%AE/3%20%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="codingdaidai">
+<meta property="og:description" content="微服务通用模块开发通用模块功能设计思想 通用的代码、配置不应该散落在各个业务模块中，不利于维护与更新 一个大的系统，响应对象需要统一外层格式 各种业务设计与实现，可能会抛出各种各样的异常，异常信息的收集也应该做到统一  ad-common模块 通用代码定义，配置定义：在多个模块中都有的  统一的响应处理：   ![](D:\Files\Daily Task\images\1617202285(1)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-25T04:39:01.154Z">
+<meta property="article:modified_time" content="2021-04-15T12:48:10.902Z">
+<meta property="article:author" content="Lingyun Zhou">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://codingdaidai.github.io/2021/04/25/%E9%A1%B9%E7%9B%AE/3%20%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title> | codingdaidai</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">codingdaidai</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录 分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://codingdaidai.github.io/2021/04/25/%E9%A1%B9%E7%9B%AE/3%20%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lingyun Zhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="codingdaidai">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-25 12:39:01" itemprop="dateCreated datePublished" datetime="2021-04-25T12:39:01+08:00">2021-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-15 20:48:10" itemprop="dateModified" datetime="2021-04-15T20:48:10+08:00">2021-04-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="微服务通用模块开发"><a href="#微服务通用模块开发" class="headerlink" title="微服务通用模块开发"></a><strong>微服务通用模块开发</strong></h1><h2 id="通用模块功能"><a href="#通用模块功能" class="headerlink" title="通用模块功能"></a>通用模块功能</h2><h3 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h3><ul>
+<li>通用的代码、配置不应该散落在各个业务模块中，不利于维护与更新</li>
+<li>一个大的系统，响应对象需要统一外层格式</li>
+<li>各种业务设计与实现，可能会抛出各种各样的异常，异常信息的收集也应该做到统一</li>
+</ul>
+<h3 id="ad-common模块"><a href="#ad-common模块" class="headerlink" title="ad-common模块"></a>ad-common模块</h3><ul>
+<li><p>通用代码定义，配置定义：在多个模块中都有的</p>
+</li>
+<li><p>统一的响应处理：</p>
+<p>  ![](D:\Files\Daily Task\images\1617202285(1).png)</p>
+</li>
+</ul>
+<p>​    Http请求的处理过程：当客户端发起http请求，首先到restController或Controller（区别：rest返回一个rest数据，简单认为是一个json类型的数据；Controller视图返回，即前端返回的视图），Controller之后到Service。再到Dao层，最后向http请求返回HttpResponse，例如图中所示的数据（id，name…）</p>
+<p>​    存在问题：前后端分离，前端请求，后端返回，后端返回的数据格式千差万别，所以需要一种统一的响应包装。需要将返回的数据包装到json里的data标签里，外层添加了两个标签，code代表响应码，类似于http的响应码，编码代表不同状态，例如0代表正常，其他数字代表不同的异常；message是错误消息</p>
+<p>​    实现统一响应用到注解：（Rest)ControllerAdvice 和接口：ResponseBodyAdvice。Advice在spring中代表xxx增强。@（Rest)ControllerAdvice是ControllerAdvice和ResponseBody的语义结合，是控制器增强的意思，会对响应进行拦截吗，然后统一处理响应过程。ResponseBodyAdvice可以控制处理哪些响应以及做什么样的处理。两者结合实现统一响应的功能</p>
+<p>​    实行统一响应的好处：统一数据利于前端处理，解析；</p>
+<p>​    搜索“http统一响应”</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/126603159">RestFul API 统一响应格式与自动包装</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019795918">SpringBoot统一响应体解决方案</a></p>
+<ul>
+<li>统一的异常处理：</li>
+</ul>
+<p>![](D:\Files\Daily Task\images\1617204205(1).png)</p>
+<p>​    问题：在server中可能出现异常，例如图中：AdException是一个自定义的异常。</p>
+<pre><code>            1. 直接返回错误对用户不友好
+            2. 对异常分类，便于排查问题
+            3. 降低业务代码中对异常处理的耦合。如果不统一处理，需要在service（即绿色的）中对每个异常进行try-catch，在catch中对异常包装或处理</code></pre>
+<h2 id="统一响应处理的开发"><a href="#统一响应处理的开发" class="headerlink" title="统一响应处理的开发"></a>统一响应处理的开发</h2><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><p>vo包下是统一响应对象；advice下是控制器拦截</p>
+<p>![1618392806(1)](D:\Files\Daily Task\images\1618392806(1).png)</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.ad.vo;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span>  <span class="comment">//lombok注解，可以对各个属性实现get和set</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span> <span class="comment">//注解，无参的构造函数</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span> <span class="comment">//全参的构造函数，构造顺序是定义元素的顺序</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonResponse</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer code;</span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line">    <span class="keyword">private</span> T data;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CommonResponse</span><span class="params">(Integer code,String message)</span></span>&#123; <span class="comment">//构造函数</span></span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">        <span class="keyword">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.ad.advice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.core.MethodParameter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.MediaType;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.converter.HttpMessageConverter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.ServerHttpRequest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.ServerHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestControllerAdvice;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestControllerAdvice</span> <span class="comment">//对响应实现统一拦截</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonResponseDataAdvice</span> <span class="keyword">implements</span> <span class="title">ResponseBodyAdvice</span>&lt;<span class="title">Object</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//实现两个方法 supports和beforeBodyWrite</span></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//support方法，响应是否该拦截，是否支持拦截；可以根据方法参数或者类去判断</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(MethodParameter methodParameter,</span></span></span><br><span class="line"><span class="function"><span class="params">                            Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; aClass)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//在写入响应之前，统一响应CommonResponse应该在这里生成</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">beforeBodyWrite</span><span class="params">(Object o,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  MethodParameter methodParameter, MediaType mediaType,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; aClass,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  ServerHttpRequest serverHttpRequest,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  ServerHttpResponse serverHttpResponse)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>对有些简单响应例如字符串响应，不用进行统一的拦截，在com.imooc.ad下加一个annotation注解，在其下创建一个IgnoreResponseAdvice注解；这个注解可以使用在类或方法上，将来具体使到Controller上，使其不使用CommonResponse这个响应，具体做法是在supports方法里判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.ad.advice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.imooc.ad.annotation.IgnoreResponseAdvice;</span><br><span class="line"><span class="keyword">import</span> com.imooc.ad.vo.CommonResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.MethodParameter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.MediaType;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.converter.HttpMessageConverter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.ServerHttpRequest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.ServerHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestControllerAdvice;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestControllerAdvice</span> <span class="comment">//对响应实现统一拦截</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonResponseDataAdvice</span> <span class="keyword">implements</span> <span class="title">ResponseBodyAdvice</span>&lt;<span class="title">Object</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//实现两个方法 supports和beforeBodyWrite</span></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//support方法，响应是否该拦截，是否支持拦截；可以根据方法参数或者类去判断</span></span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;all&quot;)</span> <span class="comment">//可能产生空指针异常，把这个warning隐藏</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(MethodParameter methodParameter,</span></span></span><br><span class="line"><span class="function"><span class="params">                            Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; aClass)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//通过methodParameter拿到类的声明，如果这个类的声明被IgnoreResponseAdvice这个注解标识，就返回false，使其不被CommonResponse影响</span></span><br><span class="line">        <span class="keyword">if</span>(methodParameter.getDeclaringClass().isAnnotationPresent(</span><br><span class="line">                IgnoreResponseAdvice.class</span><br><span class="line">        ))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//对方法的响应与类同理</span></span><br><span class="line">        <span class="keyword">if</span> (methodParameter.getMethod().isAnnotationPresent(</span><br><span class="line">                IgnoreResponseAdvice.class</span><br><span class="line">        ))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">//除了以上两种情况，均返回true做统一响应，执行beforeBodyWrite方法</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//在写入响应之前，统一响应CommonResponse应该在这里生成</span></span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;all&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">beforeBodyWrite</span><span class="params">(Object o,//o是一个响应对象</span></span></span><br><span class="line"><span class="function"><span class="params">                                  MethodParameter methodParameter, MediaType mediaType,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; aClass,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  ServerHttpRequest serverHttpRequest,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  ServerHttpResponse serverHttpResponse)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        CommonResponse&lt;Object&gt; response = <span class="keyword">new</span> CommonResponse&lt;&gt;(<span class="number">0</span>,<span class="string">&quot;&quot;</span>);<span class="comment">//定义最终的返回对象</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span>==o)&#123; <span class="comment">//如果响应对象为空 直接返回，response 不需要设置 data</span></span><br><span class="line">            <span class="keyword">return</span> response;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (o <span class="keyword">instanceof</span> CommonResponse)&#123; <span class="comment">//如果返回对象o是CommonResponse，不需要再处理</span></span><br><span class="line">            response = (CommonResponse&lt;Object&gt;)o);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123; <span class="comment">//否则, 把响应对象作为 CommonResponse 的 data 部分</span></span><br><span class="line">            response.setData(o);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h3><ol>
+<li><p>@RestControllerAdvice 注解：Advice 在 Spring 中的含义就是对 XX 功能增强，RestControllerAdvice（ControllerAdvice）就是对控制器增强。之所以使用 RestControllerAdvice，是因为我们对外提供的都是 Rest 接口（json）。</p>
+<p> 我们需要对 Controller 返回的内容做一些额外的工作，即功能增强，就需要利用到这个注解。另外，这个注解提供了 basePackages 属性可以指定对特定 package 中的 Controller 生效。</p>
+</li>
+<li><p>ResponseBodyAdvice 接口</p>
+<p> ResponseBodyAdvice 的作用是在响应体返回之前做一些自定义的处理工作。通常，我们会实现 ResponseBodyAdvice 接口，并包装统一的响应返回。接口的详细定义可以阅读 Spring 官网的解释: <a target="_blank" rel="noopener" href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/ResponseBodyAdvice.html">Spring ResponseBodyAdvice</a></p>
+<ul>
+<li><p>supports 方法</p>
+<p>  supports 的返回值是 boolean 类型，用于指定哪些 Controller 方法需要处理。我们当前的代码实现是标注了 IgnoreResponseAdvice 注解的类或者方法，统一响应不会生效。</p>
+</li>
+<li><p>beforeBodyWrite 方法</p>
+<p>  根据方法的名字可以知道，这个方法实现了在结果输出前的操作。这个方法的参数很多，我们只需要关注第一个：Object，这个就是原始的 Controller 返回的内容。我们也就是需要对它进行包装。</p>
+</li>
+</ul>
+</li>
+<li><p>如果我们对 Controller 返回的结果的处理过程比较复杂，那么根据处理的分类，可以指定多个 ResponseBodyAdvice，并使用 @Order 指定处理顺序。</p>
+</li>
+</ol>
+<h2 id="统一异常处理的开发"><a href="#统一异常处理的开发" class="headerlink" title="统一异常处理的开发"></a>统一异常处理的开发</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>![1618488569(1)](D:\Files\Daily Task\images\1618488569(1).png)</p>
+<p>在包exception中定义一个异常；在advice包下创建GlobalExceptionAdvice 类写自己想要的异常处理方法。如果有多个想自己处理的异常，可以继续扩展，优化: 定义多种类异常, 并实现对应的异常处理. 例如: 推广单元的操作出现异常, 抛出 AdUnitException;Binlog 解析异常, 抛出 BinlogException</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.ad.exception;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AdException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123; <span class="comment">//自定义一个统一的异常处理类，可以自己修改</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AdException</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);<span class="comment">//定义一个异常，说明要处理的异常类</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.ad.advice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.imooc.ad.exception.AdException;</span><br><span class="line"><span class="keyword">import</span> com.imooc.ad.vo.CommonResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ExceptionHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestControllerAdvice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestControllerAdvice</span> <span class="comment">//RestControllerAdvice: 组合注解, ControllerAdvice + ResponseBody, 是对 RestController 的功能增强</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalExceptionAdvice</span> </span>&#123; <span class="comment">//写自己想要的异常处理方法，对AdException 进行统一处理</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExceptionHandler(value = AdException.class)</span><span class="comment">//ExceptionHandler: 可以对指定的异常进行拦截</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResponse&lt;String&gt; <span class="title">handlerAdException</span><span class="params">(HttpServletRequest req,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                     AdException ex)</span></span>&#123;</span><br><span class="line">         <span class="comment">// 统一异常接口的响应</span></span><br><span class="line">        <span class="comment">// 优化: 定义不同类型的异常枚举(异常码和异常信息)</span></span><br><span class="line">        CommonResponse&lt;String&gt; response = <span class="keyword">new</span> CommonResponse&lt;&gt;(-<span class="number">1</span>,</span><br><span class="line">                <span class="string">&quot;business error&quot;</span>);</span><br><span class="line">        response.setData(ex.getMessage());</span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="代码说明-1"><a href="#代码说明-1" class="headerlink" title="代码说明"></a>代码说明</h3><ol>
+<li><p>@ExceptionHandler</p>
+<p> 拦截 Spring 的异常处理需要使用到 ExceptionHandler 注解。Spring 3.0 引入的这个注解可以让我们在一个 handler 方法或者类中统一处理 Controller 抛出的异常，使得写出的代码更加清晰</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span>             <span class="comment">// 这个注解标注在对象的方法上</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span>     <span class="comment">// 在运行时有效</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ExceptionHandler &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Exceptions handled by the annotated method. If empty, will default to any</span></span><br><span class="line"><span class="comment">	 * exceptions listed in the method argument list.</span></span><br><span class="line"><span class="comment">   * value 是一个 Class 数组，用于指定需要拦截的异常类。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	Class&lt;? extends Throwable&gt;[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​            说明：该注解注释的方法可以有灵活的输入参数，通常需要给出异常参数：包括一般的异常或特定的异常        （即自定义异常），如果注解自身没有指定异常类，会默认进行映射**</p>
+<h2 id="统一配置的开发"><a href="#统一配置的开发" class="headerlink" title="统一配置的开发"></a>统一配置的开发</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>定制Http消息转换器，Http消息转换器将Java实体对象转换为http数据输出流，spring boot底层通过HttpMessageConverts这个Jackson库将Java实体类输出为json格式，当有多个转换器可用时，会根据消息类型和需要的数据类型选择合适的转换器使用。要修改这个转换器，最简单的是修改configureMessageConverters这个方法</p>
+<h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><p>新建conf包存放通用的配置</p>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.ad.conf;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.converter.HttpMessageConverter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span> <span class="comment">//使其作为配置能被扫描到</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfiguration</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configureMessageConverters</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> </span>&#123;</span><br><span class="line">        converters.clear();</span><br><span class="line">        converters.add(<span class="keyword">new</span> MappingJackson2HttpMessageConverter());<span class="comment">//先清空，只使用一个转换器，MappingJackson2HttpMessageConverter可以将java对象转换为json对象</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="代码说明-2"><a href="#代码说明-2" class="headerlink" title="代码说明"></a>代码说明</h3><ol>
+<li><p>WebMvcConfigurer 接口：Spring 的 WebMvcConfigurer 接口提供了很多方法让我们来定制 Spring MVC 的配置。这个接口还是非常常用的，可以对 Spring 的很多配置和行为进行定制。下面对一些常用的方法进行解释：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 匹配路由请求规则</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">configurePathMatch</span><span class="params">(PathMatchConfigurer configurer)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 注册自定义的 Formatter 和 Convert</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">addFormatters</span><span class="params">(FormatterRegistry registry)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 添加静态资源处理器</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 配置消息转换器</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">configureMessageConverters</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 添加自定义视图控制器</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">addViewControllers</span><span class="params">(ViewControllerRegistry registry)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 添加自定义方法参数处理器</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">addArgumentResolvers</span><span class="params">(List&lt;HandlerMethodArgumentResolver&gt; resolvers)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>@Configuration：标注出来后，在广告系统的其他模块引用了ad-common之后，所有请求的响应和请求对象的处理都会通过这个消息转换器做一层过滤处理</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>1：为什么响应对象需要统一格式呢 ？</p>
+<pre><code>1. 与前端和客户端保持统一，拥有统一的结构，方便前端和客户端的统一处理，特别是在程序出错的情况下，可以直接显示错误信息。
+2. 日志结构的统一，我们经常会把程序的响应以日志的形式打印出来，所以。响应是统一的，日志的结构也能够保持统一。</code></pre>
+<p> 2：除了通用的 AdException，你可能还会设计哪些自定义异常类呢？这样设计的理由是什么呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">自定义异常是需要细化到具体的业务的，但是只有当你的某一块业务足够大（或者简单的说就是代码比较多）才需要自定义异常。比如代码中有很多处理推广计划的地方，就可以定义 AdPlanException；代码中处理 MySQL Binlog 的部分很多，就可以定义 MySQLBinlogException 等等。</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/25/%E9%A1%B9%E7%9B%AE/2%20%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E9%AA%A8%E6%9E%B6%E5%BC%80%E5%8F%91/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/25/%E9%A1%B9%E7%9B%AE/4%20%E5%B9%BF%E5%91%8A%E6%8A%95%E6%94%BE%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91"><span class="nav-number">1.</span> <span class="nav-text">微服务通用模块开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">通用模块功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.1.</span> <span class="nav-text">设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ad-common%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.2.</span> <span class="nav-text">ad-common模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86%E7%9A%84%E5%BC%80%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">统一响应处理的开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.3.</span> <span class="nav-text">代码说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84%E5%BC%80%E5%8F%91"><span class="nav-number">1.3.</span> <span class="nav-text">统一异常处理的开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">代码说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E9%85%8D%E7%BD%AE%E7%9A%84%E5%BC%80%E5%8F%91"><span class="nav-number">1.4.</span> <span class="nav-text">统一配置的开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">1.4.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E-2"><span class="nav-number">1.4.4.</span> <span class="nav-text">代码说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.1.</span> <span class="nav-text">问题</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lingyun Zhou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lingyun Zhou</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
